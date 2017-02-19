@@ -22,7 +22,12 @@ function Player (){
 
     this.x = 50;
     this.y = 50;
-    this.speed = 0.5;
+    this.speed = 1;
+    this.acceleration = 0.25;
+    this.topSpeed = 2;
+    this.accX = 0;
+    this.accY = 0;
+
 
     this.spawn = function(x, y){
         this.x = x;
@@ -32,16 +37,24 @@ function Player (){
     }
     this.update = function(){
 
+        this.x += this.accX;
+        this.y += this.accY;
 
+        //this.accX /= this.accX;
+        //this.accY /= this.accY;
 
     }
     this.draw = function(context){
+        context.beginPath();
+        context.fillStyle = "black";
+        context.fill();
         context.fillRect(this.x, this.y, 10, 10);
     }
 
     this.move = function (x, y){
-        this.x += x * this.speed;
-        this.y += y * this.speed;
+        this.accX += x * this.speed;
+        this.accY += y * this.speed;
+        //console.log(Math.hypot(this.accX, this.accY));
     }
 
 }
