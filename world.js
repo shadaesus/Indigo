@@ -6,11 +6,14 @@
 function World (){
     this.originx = 0;
     this.originy = 0;
-    this.layers = 5;
-    this.size = 25;
-    this.density = 4;
+    this.layers = 3; //Layers of chunks (Keep odd for centralized chunk)
+    this.density = 4; //Density per layer
+    this.size = 25; //Tile size
     this.chunks = [];
     this.chunk = new Chunk( this.originx, this.originy, this.size, this.density);
+
+    this.origin_x;
+    this.origin_y;
 
     this.initialise = function(){
         for (var a = 0; a < this.layers; a ++)
@@ -21,6 +24,22 @@ function World (){
                     this.size,
                     this.density);
             }
+    }
+    this.update = function(x,y){
+        this.origin_x = x;
+        this.origin_y = y
+
+        var chunkDensity = this.density  * this.size;
+
+        this.local_x = this.origin_x%chunkDensity;
+        this.local_y = this.origin_y%chunkDensity;
+
+        //If there is a change in chunk:
+        //Find direction according to hash table. (overkill?) (all 8 possibilities)
+        //Update origin chunk and positioning of chunks in array.
+
+        //Update chunk density and size according to zoom to fill entire screen.
+
     }
     this.draw = function(context){
         var mid = this.layers / 2 - 0.5;
@@ -50,7 +69,7 @@ function Chunk (originx, originy, tileSize, tileDensity){
     this.tileDensity = tileDensity;
 
 
-    this.update = function(){
+        this.update = function(){
     }
 
     this.draw = function(context, type){
@@ -77,6 +96,7 @@ function Chunk (originx, originy, tileSize, tileDensity){
                 context.fillRect(this.originx + this.tileSize * a, this.originy + this.tileSize * b, this.tileSize, this.tileSize);
                 context.fillStyle = "white";
                 context.fillText(a + ", " + b, this.originx + this.tileSize * a,this.originy + this.tileSize * b + 10);
+                //context.fillText(a * this.tileDensity + b, this.originx + this.tileSize * a,this.originy + this.tileSize * b + 10);
             }
         }
     }

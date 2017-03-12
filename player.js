@@ -7,7 +7,7 @@ window.addEventListener("keypress", keyboardControls, false);
 
 //Keyboard controller.
 function keyboardControls(e) {
-    console.log ("Key pressed" + e.keyCode)
+    //console.log ("Key pressed" + e.keyCode)
     if (e.keyCode == ("119")) //W
         Game.player.move(0,-1);
     if (e.keyCode == ("97")) //A
@@ -48,7 +48,7 @@ function Player (){
         context.beginPath();
         context.fillStyle = "black";
         context.fill();
-        context.fillRect(this.x, this.y, 10, 10);
+        context.fillRect(Game.width/2, Game.height/2, 10, 10);
     }
 
     this.move = function (x, y){

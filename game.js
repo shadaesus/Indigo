@@ -6,7 +6,7 @@ window.addEventListener("keypress", keyboardControls, false);
 
 //Keyboard controller.
 function keyboardControls(e) {
-    console.log ("Key pressed" + e.keyCode)
+    //console.log ("Key pressed" + e.keyCode)
     if (e.keyCode == ("32")) //Space - Refresh page
         window.location.reload();
     if (e.keyCode == ("112")) //P - Pause
@@ -79,7 +79,7 @@ Game.start = function () {
     //Instantiates a new player.
     Game.player = new Player();
 
-    Game.player.spawn(100,100);
+    Game.player.spawn(0,0);
 
     Game.world = new World();
     Game.world.initialise();
@@ -90,10 +90,20 @@ Game.start = function () {
 
 Game.update = function () {
     Game.player.update();
+    Game.world.update(Game.player.x, Game.player.y);
 };
 
 Game.draw = function () {
     Game.context.clearRect(0, 0, Game.width, Game.height);
+
+
+    //Move camera to camera position (Focused on player
+    Game.context.save();
+    Game.context.translate(-Game.player.x+Game.width/2, -Game.player.y+Game.height/2);
     Game.world.draw(Game.context);
+    Game.context.restore();
+
+    //Draw player and ui on screen
     Game.player.draw(Game.context);
+    Game.context.fillText(Game.world.local_x + ", " + Game.world.local_y, 20,20);
 };

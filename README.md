@@ -1,2 +1,4 @@
 # Indigo
-Top down web game
+Features:
+Top down camera system
+World tile map with partial chunk controls.
