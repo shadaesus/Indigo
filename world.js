@@ -6,8 +6,8 @@
 function World (){
     this.originx = 0;
     this.originy = 0;
-    this.layers = 3; //Layers of chunks (Keep odd for centralized chunk)
-    this.density = 4; //Density per layer
+    this.layers = 11; //Layers of chunks (Keep odd for centralized chunk)
+    this.density = 1; //Density per layer
     this.size = 25; //Tile size
     this.chunks = [];
     this.chunk = new Chunk( this.originx, this.originy, this.size, this.density);
@@ -35,7 +35,7 @@ function World (){
         this.local_y = this.origin_y%chunkDensity;
 
         //If there is a change in chunk:
-        //Find direction according to hash table. (overkill?) (all 8 possibilities)
+        //Find direction according to hash table. (overkill?) (all 8 possibilities(x, +))
         //Update origin chunk and positioning of chunks in array.
 
         //Update chunk density and size according to zoom to fill entire screen.
@@ -95,7 +95,11 @@ function Chunk (originx, originy, tileSize, tileDensity){
                 context.fill();
                 context.fillRect(this.originx + this.tileSize * a, this.originy + this.tileSize * b, this.tileSize, this.tileSize);
                 context.fillStyle = "white";
-                context.fillText(a + ", " + b, this.originx + this.tileSize * a,this.originy + this.tileSize * b + 10);
+                //Chunk id.
+                context.fillText(this.originx / this.tileSize + ", " + this.originy / this.tileSize, this.originx + this.tileSize * a,this.originy + this.tileSize * b + 10);
+
+                //Tile id.
+                context.fillText(a + ", " + b, this.originx + this.tileSize * a,this.originy + this.tileSize * b + 20);
                 //context.fillText(a * this.tileDensity + b, this.originx + this.tileSize * a,this.originy + this.tileSize * b + 10);
             }
         }
