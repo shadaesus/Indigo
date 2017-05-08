@@ -79,9 +79,11 @@ Game.start = function () {
     //Instantiates a new player.
     Game.player = new Player();
 
-    Game.player.spawn(0,0);
+    var position_x = 0, position_y = 0;
 
-    Game.world = new World();
+    Game.player.spawn(position_x,position_y);
+
+    Game.world = new World(position_x, position_y, 25, 5);
     Game.world.initialise();
 
     //Dont know what this does yet.
@@ -105,5 +107,10 @@ Game.draw = function () {
 
     //Draw player and ui on screen
     Game.player.draw(Game.context);
-    Game.context.fillText(Game.world.local_x + ", " + Game.world.local_y, 20,20);
+
+    //On screen debug
+    Game.context.fillText("Global pos: " + Game.world.origin_x + ", " + Game.world.origin_y, 20,20);
+    Game.context.fillText("Local pos: " + Game.world.local_x + ", " + Game.world.local_y, 20,30);
+    Game.context.fillText("Chunk pos: " + Game.world.chunk_x + ", " + Game.world.chunk_y, 20,40);
+    Game.context.fillText("Local chunk pos: " + Game.world.local_chunk_x + ", " + Game.world.local_chunk_y, 20,50);
 };
